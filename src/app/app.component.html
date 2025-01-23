@@ -1,0 +1,55 @@
+<div class="header" color="green">
+  <h1>Contalink Invoices</h1>
+</div>
+<div class="container" style="margin:70px;">
+  <div class="vertical-center">
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker1">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker1">
+        </mat-datepicker-toggle>
+      <mat-date-range-picker #picker1></mat-date-range-picker>
+      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="vertical-center">
+  <button mat-stroked-button color="save" (click)="save()">Select</button>
+  <button mat-stroked-button color="restart" (click)="fetchInvoices()">Restart</button>
+  </div>
+</div>
+<div class="container">
+  <table mat-table [dataSource]="invoices" class="mat-elevation-z8" #tabla1>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let invoice"> {{invoice.id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="invoice_number">
+      <th mat-header-cell *matHeaderCellDef> Invoice Number </th>
+      <td mat-cell *matCellDef="let invoice"> {{invoice.invoice_number}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let invoice"> {{invoice.total}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="invoice_date">
+      <th mat-header-cell *matHeaderCellDef> invoice_date </th>
+      <td mat-cell *matCellDef="let invoice"> {{invoice.invoice_date}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let invoice"> {{invoice.status}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="invoicesColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: invoicesColumns;"></tr>
+  </table>
+</div>
