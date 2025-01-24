@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   save() {
     const startDate: string = this.range.value.start
     const endDate: string = this.range.value.end
-    this.invoicesService.getPosts(startDate, endDate).subscribe(data => {
+    this.invoicesService.getInvoices(startDate, endDate).subscribe(data => {
       this.invoices = data;
     });
   }
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   }
   fetchInvoices(): void {
     this.range.reset();
-    this.invoicesService.getPosts('','').subscribe(data => {
+    this.invoicesService.getInvoices('','').subscribe(data => {
       this.invoices = data;
     });
   }

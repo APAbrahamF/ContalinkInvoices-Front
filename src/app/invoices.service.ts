@@ -14,24 +14,16 @@ export class InvoicesService {
 
   constructor(private http: HttpClient) { }
 
-  // GET request
-  getPosts(startDate?: string, endDate?: string): Observable<any> {
-    // Configuración inicial de opciones
+  getInvoices(startDate?: string, endDate?: string): Observable<any> {
     const options = startDate && endDate
       ? { params: new HttpParams().set('start_date', startDate).set('end_date', endDate) }
       : {};
-  
-    // Si hay fechas, hacemos una solicitud directamente con los parámetros.
     if (startDate && endDate) {
       return this.http.get(`${this.baseUrl}/invoices`, options);
     }
-  
-    // Si no hay fechas, verificamos la caché.
     if (this._cachedData) {
-      return of(this._cachedData); // Cambié `from` por `of` para manejar el valor directamente.
+      return of(this._cachedData);
     }
-  
-    // Si no hay datos en caché, hacemos la solicitud HTTP y almacenamos el resultado.
     return this.http.get(`${this.baseUrl}/invoices`, options).pipe(
       tap((data: any) => {
         if (data) {
